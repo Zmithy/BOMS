@@ -1,0 +1,70 @@
+﻿@page "/Orders"
+@using BOMS.Data
+@using BOMS.Models
+
+<h1>Order</h1>
+<p>test: @test</p>
+<p>test2: @test2</p>
+<input @bind="test" placeholder="Id" accept="int"/>
+<input @bind="test3" placeholder="Customer"/>
+<input @bind="outstanding" type="checkbox" >
+<input @bind="test5" placeholder="Unused"/>
+<button class="btn btn-primary" @onclick="doSomething">Click me</button>
+<button class="btn btn-primary" @onclick="newOrder">New Order</button>
+
+
+@if (orderList != null)
+{
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Outstanding</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in orderList)
+            {
+                <tr>
+                    <td>@order.Date.ToShortDateString()</td>
+                    <td>@order.Customer.Name</td>
+                    <td>@order.Outstanding</td>
+                    <td>@order.Id</td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+@code {
+    private bool outstanding = false;
+    private string test = string.Empty;
+    private string test2 = string.Empty;
+    private string test3 = string.Empty;
+    private string test4 = string.Empty;
+    private string test5 = string.Empty;
+    private DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+    List<Order> orderList = new List<Order>();
+
+    private void doSomething()
+    {
+        if (test != string.Empty)
+            test2 = test;
+        test = string.Empty;
+    }
+
+    private void newOrder()
+    {
+        //var t = int.Parse(test);
+        //var o = new Order(t,dateNow,test3 , outstanding);
+        //orderList.Add(o);
+    }
+
+
+}

@@ -1,0 +1,56 @@
+﻿@page "/"
+@using BOMS.Models
+@using BOMS.Data
+@inject OrderService OrderService
+<PageTitle>Index</PageTitle>
+
+<h1>Barnes 622 Order System</h1>
+<h6>Since Corporate won't do it!</h6>
+
+
+
+
+    @if(orderList == null){
+            <p><em>Loading...</em></p>
+    }
+    else{
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Outstanding</th>
+                    <th>Email</th>
+                    <th>Id</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              @foreach (var order in orderList)
+                {
+                    <tr>
+                        <td>@order.Date.ToShortDateString()</td>
+                        <td>@order.Customer.Name</td>
+                        <td>@order.Outstanding</td>
+                        <td>@order.Customer.Email</td>
+                        <td>@order.Id</td>
+                    </tr>
+                }
+            
+            </tbody>
+        </table>
+    }
+
+@code {
+
+    private List<Order>? orderList;
+    protected override async Task OnInitializedAsync()
+    {
+        
+        orderList = await OrderService.GetOrdersAsync();
+        //orderList = null;
+    }
+}
+
+
+
