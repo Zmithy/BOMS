@@ -12,17 +12,17 @@ namespace BOMS.Data
             
             bool tf; ;
             var rand = new Random();
-            var number = rand.Next(12);
+            var number = rand.Next(100);
             while (number >= 0) 
             {
-                var c = Customer.GetRCustomer();
-                if (number % 2 == 0) tf = true;
+                var c = Customer.GenerateRandomCustomer();
+                if (number > 50) tf = true;
                 else tf = false;
                
                 orders.Add(new Order()
                 {
                      Id = rand.Next(number),
-                     Date = DateOnly.FromDateTime(DateTime.Now),
+                     Date = DateTime.Now.AddDays(-1 * number),
                      Customer = c,
                      Outstanding = tf
                 });

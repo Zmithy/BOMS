@@ -1,55 +1,67 @@
 ﻿@page "/"
 @using BOMS.Models
 @using BOMS.Data
+@using Microsoft.Extensions.Configuration
+@inject CustomerData CustomerData
+@inject SqlDataAccess SqlDataAccess
 @inject OrderService OrderService
 <PageTitle>Index</PageTitle>
 
 <h1>Barnes 622 Order System</h1>
 <h6>Since Corporate won't do it!</h6>
 
+@if (orderList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else {
+    <SfGrid DataSource="@orderList" AllowPaging="true">
+        <GridPageSettings PageSize="10"></GridPageSettings>
+        <GridColumns>
+            <GridColumn Field=@nameof(Order.Date) HeaderText="Order ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+            <GridColumn Field=@nameof(Order.Customer.Name) HeaderText="Customer Name" TextAlign="TextAlign.Center" Width="150"></GridColumn>
+            <GridColumn Field=@nameof(Order.Outstanding) HeaderText="Order Date" Format="d" Type="ColumnType.DateOnly" TextAlign="TextAlign.Right" Width="130"></GridColumn>
+            <GridColumn Field=@nameof(Order.Customer.Email) HeaderText="Order Time" Type="ColumnType.TimeOnly" TextAlign="TextAlign.Right" Width="130"></GridColumn>        
+            <GridColumn Field=@nameof(Order.Id) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+
+    <h1>@custResult.Email</h1>
 
 
+    <button class="btn btn-primary" @onclick="doSomething">submit</button>
+}
 
-    @if(orderList == null){
-            <p><em>Loading...</em></p>
-    }
-    else{
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Name</th>
-                    <th>Outstanding</th>
-                    <th>Email</th>
-                    <th>Id</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-              @foreach (var order in orderList)
-                {
-                    <tr>
-                        <td>@order.Date.ToShortDateString()</td>
-                        <td>@order.Customer.Name</td>
-                        <td>@order.Outstanding</td>
-                        <td>@order.Customer.Email</td>
-                        <td>@order.Id</td>
-                    </tr>
-                }
-            
-            </tbody>
-        </table>
-    }
 
-@code {
+    
+@code{
 
     private List<Order>? orderList;
+    private Customer custResult = new();
+
+
     protected override async Task OnInitializedAsync()
     {
-        
+
         orderList = await OrderService.GetOrdersAsync();
-        //orderList = null;
+
+        var o = orderList.First();
+        var c = o.Customer;
+        custResult.Email = "foo@bar.com";
+
+        // Why isnt this showing in DB ?
+        await CustomerData.UpsertCustomer(c);
+
+
     }
+
+    protected async Task doSomething(){
+
+        custResult.Email = "Test@domain.com";
+        var g = await CustomerData.GetCustomer(custResult);
+        custResult = g[0];
+    }
+
 }
 
 

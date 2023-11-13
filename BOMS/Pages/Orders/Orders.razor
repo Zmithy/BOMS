@@ -1,0 +1,74 @@
+﻿@page "/Orders"
+@using BOMS.Data
+@using BOMS.Models
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Popups
+@using System.Linq;
+@inject OrderService OrderService
+@inject CustomerData CustomerData
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+<SfGrid DataSource="@customerList" AllowPaging="true" Toolbar="@(new string[]{"Add","Edit","Delete","Update","Cancel"})">
+    <GridPageSettings PageSize="10"></GridPageSettings>
+    <GridEvents OnActionBegin="ActionBeginHandler" TValue="Customer"></GridEvents>
+    <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="@EditMode.Dialog" Dialog="DialogParams">
+        <Template> 
+        @{
+             var Customer = (context as Customer);
+         }
+         <div>
+             <div class="form-group col-md-6">
+                 <SfNumericTextBox ID="OrderID" @bind-Value="@(Customer.Id)" Enabled="@Check" FloatLabelType="FloatLabelType.Always" Placeholder="Order ID"></SfNumericTextBox>
+             </div>
+             <div class="form-group col-md-6">
+                 <SfAutoComplete TItem="Customer" ID="Order.Customer.Name" @bind-Value="@(Customer.Name)" TValue="string" DataSource="@customerList" FloatLabelType="FloatLabelType.Always" Placeholder="Customer Name">
+                     <AutoCompleteFieldSettings Value="CustomerID"></AutoCompleteFieldSettings>
+                 </SfAutoComplete>
+             </div>
+         
+         </div>
+         </Template>
+    </GridEditSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(Customer.Id) HeaderText="Customer ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
+        <GridColumn Field=@nameof(Customer.Name) HeaderText="Customer Name" TextAlign="TextAlign.Center" Width="150"></GridColumn>
+        
+    </GridColumns>
+</SfGrid>
+</div></div></div>
+
+@code {
+
+    private Boolean Check = false;
+    private DialogSettings DialogParams = new DialogSettings { MinHeight = "400px", Width = "450px" };
+   
+    List<Customer> customerList = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fill the list
+        customerList = await CustomerData.GetAllCustomers();
+        
+    }
+
+    public void ActionBeginHandler(ActionEventArgs<Customer> args)
+    {
+        if (args.RequestType.ToString() == "Add")
+        {
+            Check = true;
+        }
+        else
+        {
+            Check = false;
+        }
+    }
+
+
+
+
+}

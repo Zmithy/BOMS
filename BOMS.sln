@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOMS", "BOMS\BOMS.csproj", "{81DF4004-D357-4219-9AD5-37274B64D45A}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BOMS_DB", "BOMS_DB\BOMS_DB.sqlproj", "{458D1454-3D98-449A-BAE7-4730720757DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{81DF4004-D357-4219-9AD5-37274B64D45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DF4004-D357-4219-9AD5-37274B64D45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DF4004-D357-4219-9AD5-37274B64D45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458D1454-3D98-449A-BAE7-4730720757DF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

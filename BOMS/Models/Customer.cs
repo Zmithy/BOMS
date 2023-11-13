@@ -2,7 +2,7 @@
 
 namespace BOMS.Models
 {
-    public class Customer
+    public class Customer 
     {
         // Fields
         private int _Id;
@@ -25,7 +25,9 @@ namespace BOMS.Models
         public  string? Region { get { return _Region; } set { _Region = value; } }
         public string? PostalCode { get { return _PostalCode; } set { _PostalCode = value; } }
 
-        public static Customer GetRCustomer()
+      
+
+        public static Customer GenerateRandomCustomer()
         {
             Random r = new Random();
             List<string> names = new List<string>
@@ -96,5 +98,8 @@ namespace BOMS.Models
             
             return customer;
         }
+
+
+        
     }
 }

@@ -2,17 +2,19 @@
 
 namespace BOMS.Models
 {
-    public class Book
+    public class Book 
     {
         // Fields
+        private int _Id;
         private string? _Title;
         private decimal _Price;
         private int _Discount;
-        private string _ISBN = "0000000000000";
+        private string _ISBN = "";
         private string? _Notes;
 
-        
+
         // Properties
+        public int Id { get { return _Id; } set { _Id = value; } }
         public string? Title { get { return _Title;} set { _Title = value; } }
         public decimal Price { get { return _Price; } set { _Price = value; } }
         public int Discount { get { return _Discount; } set { _Discount = value; } }
