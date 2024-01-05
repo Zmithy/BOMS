@@ -12,7 +12,6 @@ begin
 		begin
 			update Customer set 
 				Name = @Name,
-		
 				Phone = @Phone,
 				City = @City,
 				Region = @Region,

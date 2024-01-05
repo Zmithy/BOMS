@@ -1,0 +1,148 @@
+﻿@page "/CreateOrder"
+@using BOMS.Data
+@using BOMS.Models
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.DataForm
+@using System.ComponentModel.DataAnnotations
+
+@inject CustomerData CustomerData
+@inject OrderData OrderData
+@inject NavigationManager NavigationManager
+
+
+<p>AutoComplete value is: @EmailComplete</p>
+<h3>CreateOrder</h3>
+
+
+<SfAutoComplete TValue="string" width="50%" TItem="Customer" Placeholder="Customer's Email Address'" @bind-Value="@EmailComplete" DataSource="@Customers">
+    <AutoCompleteFieldSettings Value="Email"></AutoCompleteFieldSettings>
+</SfAutoComplete>
+<button @onclick="@OnEmailCheck">Search</button>
+
+@if (!Returning_Customer)
+{
+    <h1>Customer not found!</h1>
+    <SfDataForm ID="NewCustomerForm" Width="50%"  Model="@NewCustomer" 
+        ColumnCount="2" ColumnSpacing="20px" ButtonsAlignment="FormButtonsAlignment.Center" OnValidSubmit="@OnSubmit">
+        <FormValidator>
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+        </FormValidator>
+        <FormItems>
+            @* Avoided using AutoForm for now, cant put in ID  *@
+            <FormGroup LabelText="Personal Information">
+                <FormItem Field="@nameof(NewCustomer.Name)"></FormItem>
+                <FormItem Field="@nameof(NewCustomer.Email)"></FormItem>
+                <FormItem Field="@nameof(NewCustomer.Phone)"></FormItem>
+            </FormGroup>
+            <FormGroup LabelText="Shipping Information">
+                <FormItem Field="@nameof(NewCustomer.City)"></FormItem>
+                <FormItem Field="@nameof(NewCustomer.Region)"></FormItem>
+                <FormItem Field="@nameof(NewCustomer.PostalCode)"></FormItem>
+            </FormGroup>
+            
+        </FormItems>
+        <FormButtons>
+            <SfButton >Register Customer</SfButton>
+        </FormButtons>
+    </SfDataForm>
+
+
+    
+}
+
+@if(CustomerFound)
+{
+    <h1>Order Contents</h1>
+    <SfDataForm ID="LineItemForm" Model="@BookItem" Width="50%" ColumnCount="2" ColumnSpacing="20px" ButtonsAlignment="FormButtonsAlignment.Center" OnValidSubmit="@AddLineItem">
+        <FormValidator>
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+        </FormValidator>
+        <FormItems>
+            <FormGroup LabelText="Book Information">
+                <FormItem Field="@nameof(BookItem.ISBN)"></FormItem>
+                <FormItem Field="@nameof(BookItem.Title)"></FormItem>
+                <FormItem Field="@nameof(BookItem.Price)"></FormItem>
+                <FormItem Field="@nameof(BookItem.Notes)"></FormItem>
+            </FormGroup>
+            <FormButtons>
+                <SfButton>Add to Order.</SfButton>
+            </FormButtons>
+        </FormItems>
+    </SfDataForm>
+}
+
+
+@code {
+
+    /*
+    * - Does Customer exist
+    *      - Yes
+    *          - Order.Customer id = customer id where input email = customer email
+    *      - No
+    *          - Create new customer
+    */
+
+    public string EmailComplete = "";
+    public List<Customer> Customers = new();
+    public List<string> Emails = new();
+    public bool Returning_Customer = true;
+    public bool CustomerFound = false;
+
+    private Book BookItem = new Book();
+    private Customer NewCustomer = new Customer();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customers = await CustomerData.GetAllCustomers();
+
+        foreach (Customer c in Customers)
+        {
+            if (!string.IsNullOrEmpty(c.Email))
+            {
+                Emails.Add(c.Email);
+            }
+        }
+    }
+
+    protected void OnEmailCheck()
+    {
+        if (!Emails.Contains(EmailComplete))
+        {
+            Returning_Customer = false;
+
+        }
+        else
+            CustomerFound = true;
+    }
+
+    protected async Task OnSubmit()
+    {
+        CustomerFound = true;
+        // Create new customer
+        await CustomerData.UpsertCustomer(NewCustomer);
+        Customer orderCustomer = await CustomerData.GetCustomer(NewCustomer);
+
+        // Create Order
+        Order IncomingOrder = new Order();
+        IncomingOrder.CustomerId = orderCustomer.Id;
+        IncomingOrder.Discount = 0;
+        var created =  OrderData.InsertOrder(IncomingOrder);
+
+    }
+
+    protected async Task AddLineItem()
+    {
+        // Upsert book
+        // get book id
+        // upload lineitem
+        var b = OrderData.UpsertBook(BookItem);
+        var bId = OrderData.GetBook(BookItem);
+
+        // ToDo: add the lineitems to the db
+        // placeholder add
+        await OrderData.InsertLineItem(5,5);
+    }
+}
+    
+

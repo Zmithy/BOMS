@@ -15,7 +15,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
-    <PackageReference Include="Syncfusion.Blazor" Version="23.1.36" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="24.1.44" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="24.1.44" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 

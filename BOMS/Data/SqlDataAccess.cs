@@ -45,6 +45,23 @@ namespace BOMS.Data
             return await conn.QueryAsync <Book>(sql,data, commandType: CommandType.StoredProcedure);
         }
 
+        //      LineItem
+        public async Task<IEnumerable<LineItem>> LoadLineItemData(string sql,
+                                                            DynamicParameters data,
+                                                            string connectionStringName = "Default")
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString(connectionStringName));
+            return await conn.QueryAsync<LineItem>(sql, data, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<OrderSummary>> LoadOrderSummaries(string sql,
+                                                                        DynamicParameters data, 
+                                                                        string connectionStringName = "Default")
+        {
+            using var conn = new SqlConnection(_config.GetConnectionString(connectionStringName));
+            return await conn.QueryAsync<OrderSummary>(sql,data,commandType: CommandType.StoredProcedure);
+        }
+
         // Data Saves
 
         //      Customer

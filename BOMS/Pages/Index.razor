@@ -7,51 +7,28 @@
 @inject OrderService OrderService
 <PageTitle>Index</PageTitle>
 
-<h1>Barnes 622 Order System</h1>
+<h1>Bookstore Order Management System</h1>
 <h6>Since Corporate won't do it!</h6>
-
-@if (orderList == null)
-{
-    <p><em>Loading...</em></p>
-}
-else {
-    <SfGrid DataSource="@orderList" AllowPaging="true">
-        <GridPageSettings PageSize="10"></GridPageSettings>
-        <GridColumns>
-            <GridColumn Field=@nameof(Order.Date) HeaderText="Order ID" TextAlign="TextAlign.Right" Width="120"></GridColumn>
-            <GridColumn Field=@nameof(Order.Customer.Name) HeaderText="Customer Name" TextAlign="TextAlign.Center" Width="150"></GridColumn>
-            <GridColumn Field=@nameof(Order.Outstanding) HeaderText="Order Date" Format="d" Type="ColumnType.DateOnly" TextAlign="TextAlign.Right" Width="130"></GridColumn>
-            <GridColumn Field=@nameof(Order.Customer.Email) HeaderText="Order Time" Type="ColumnType.TimeOnly" TextAlign="TextAlign.Right" Width="130"></GridColumn>        
-            <GridColumn Field=@nameof(Order.Id) HeaderText="Freight" Format="C2" TextAlign="TextAlign.Right" Width="120"></GridColumn>
-        </GridColumns>
-    </SfGrid>
-
-    <h1>@custResult.Email</h1>
-
-
-    <button class="btn btn-primary" @onclick="doSomething">submit</button>
-}
-
 
     
 @code{
-
+    /*
     private List<Order>? orderList;
     private Customer custResult = new();
 
+    public string Name { get; set; } = "Hello, World!";
 
+    public void UpdateValue()
+    {
+        Name = "Hello, Blazor!";
+    }
     protected override async Task OnInitializedAsync()
     {
 
-        orderList = await OrderService.GetOrdersAsync();
-
-        var o = orderList.First();
-        var c = o.Customer;
-        custResult.Email = "foo@bar.com";
-
-        // Why isnt this showing in DB ?
-        await CustomerData.UpsertCustomer(c);
-
+        custResult.Email = "Test@domain.com";
+        var g = await CustomerData.GetCustomer(custResult);
+        custResult = g;
+        
 
     }
 
@@ -59,8 +36,9 @@ else {
 
         custResult.Email = "Test@domain.com";
         var g = await CustomerData.GetCustomer(custResult);
-        custResult = g[0];
+        custResult = g;
     }
+    */
 
 }
 

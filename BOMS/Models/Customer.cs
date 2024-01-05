@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BOMS.Models
 {
@@ -16,13 +17,27 @@ namespace BOMS.Models
 
 
         //Properties
-        public int Id { get { return _Id; } set { _Id = value; } }
         
+        public int Id { get { return _Id; } set { _Id = value; } }
+
+        [Required(ErrorMessage = "Name is required")]
+        [Display(Name = "Name")]
         public string? Name { get { return _Name; }  set { _Name = value; } }
+
+        [Required(ErrorMessage = "Email is required")]
+        [Display(Name = "Email")]
         public string? Email { get { return _Email; } set { _Email = value; } }
+
+        [Display(Name = "Phone")]
         public string? Phone { get { return _Phone; } set { _Phone = value; } }
+
+        [Display(Name = "City")]
         public string? City { get { return _City; } set { _City = value; } }
+
+        [Display(Name = "Region")]
         public  string? Region { get { return _Region; } set { _Region = value; } }
+
+        [Display(Name = "Postal Code")]
         public string? PostalCode { get { return _PostalCode; } set { _PostalCode = value; } }
 
       

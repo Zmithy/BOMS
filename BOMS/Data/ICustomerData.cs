@@ -6,6 +6,6 @@ namespace BOMS.Data
     {
         Task UpsertCustomer(Customer data);
         Task<List<Customer>> GetAllCustomers();
-        Task<List<Customer>> GetCustomer(Customer c);
+        Task<Customer> GetCustomer(Customer c);
     }
 }

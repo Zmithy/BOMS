@@ -19,9 +19,14 @@ builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<ICustomerData, CustomerData>();
 builder.Services.AddSingleton<CustomerData, CustomerData>();
 builder.Services.AddSingleton<SqlDataAccess, SqlDataAccess>();
+builder.Services.AddSingleton<OrderData, OrderData>();
+builder.Services.AddSingleton<IOrderData, OrderData>();
 
 
 var app = builder.Build();
+
+// This expires every couple of months, https://www.syncfusion.com/account -> License & Downloads -> Get License Key
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzAxNjIwMUAzMjM0MmUzMDJlMzBhRDlzQ0pESlNVSjBYaEZYcTA4cjFoTWd1VHVRQWJWYU1uQS9JZGRGUjhzPQ==");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

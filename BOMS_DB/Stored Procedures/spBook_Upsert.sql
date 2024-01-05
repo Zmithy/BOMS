@@ -16,7 +16,7 @@ begin
 		Discount = @Discount,
 		Notes = convert(varchar,Notes) +  convert(varchar,@Notes)
 		where ISBN = @ISBN;
-		select @BookID = Id from Book 
+		select @BookId = Id from Book 
 	end
 	else
 		begin
