@@ -70,6 +70,12 @@
     <Build Include="Stored Procedures\spOrder_GetAll.sql" />
     <Build Include="Stored Procedures\spOrder_GetBooks.sql" />
     <Build Include="Tables\LineItem.sql" />
+    <Build Include="Stored Procedures\spLineItems_Delete.sql" />
+    <Build Include="Stored Procedures\spLineItems_Get.sql" />
+    <Build Include="Stored Procedures\spLineItems_GetTotal.sql" />
+    <Build Include="Stored Procedures\spLineItems_Insert.sql" />
+    <Build Include="Stored Procedures\spOrder_Delete.sql" />
+    <Build Include="Stored Procedures\spOrder_GetSummary.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BOMS_DB.refactorlog" />
